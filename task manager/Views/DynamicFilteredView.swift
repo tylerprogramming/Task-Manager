@@ -31,7 +31,10 @@ struct DynamicFilteredView<Content: View, T>: View where T: NSManagedObject {
         } else  if currentTab == "Done" {
             predicate = NSPredicate(format: "isCompleted == %i", argumentArray: [1])
         } else {
+            let today = calendar.startOfDay(for: Date())
+            let filterKey = "deadline"
             
+            predicate = NSPredicate(format: "\(filterKey) >= %@ AND isCompleted == %i", argumentArray: [today, 0])
         }
         _request = FetchRequest(entity: T.entity(), sortDescriptors: [.init(keyPath: \Task.deadline, ascending: false)], predicate: predicate)
         self.content = content

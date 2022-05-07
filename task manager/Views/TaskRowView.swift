@@ -108,14 +108,6 @@ struct TaskRowView: View {
                             Image(systemName: "square.and.pencil")
                                 .foregroundColor(.black)
                         }
-                        
-                        Button {
-                            task.isCompleted.toggle()
-                            try? environment.managedObjectContext.save()
-                        } label: {
-                            Image(systemName: "circle")
-                                .foregroundColor(.black)
-                        }
                     }
                 } else {
                     Image(systemName: "checkmark.circle.fill")
@@ -132,6 +124,16 @@ struct TaskRowView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                
+                if !task.isCompleted {
+                    Button {
+                        task.isCompleted.toggle()
+                        try? environment.managedObjectContext.save()
+                    } label: {
+                        Image(systemName: "circle")
+                            .foregroundColor(.black)
+                    }
+                }
             }
         }
     }
