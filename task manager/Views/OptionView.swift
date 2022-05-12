@@ -43,6 +43,7 @@ struct OptionView: View {
                 
                 Button {
                     showButtons.toggle()
+                    dailyTaskModel.showPopup.toggle()
                 } label: {
                     Image(systemName: "calendar.badge.plus")
                         .padding(24)

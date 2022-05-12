@@ -71,28 +71,15 @@ struct Home: View {
                 DynamicFilteredView(currentTab: taskModel.currentTab, tasksArray: taskModel.savedTasks)
                     .environmentObject(taskModel)
                     .id(UUID())
-                
-                ForEach(dailyTaskModel.savedEntities) { dailyTask in
-                    Label(
-                        title: { Text(dailyTask.showTask) },
-                        icon: { dailyTask.completionStatusSymbol }
-                    )
-                    .onTapGesture {
-                        dailyTask.isCompleted.toggle()
-
-                        withAnimation(.easeInOut(duration: 1.0)) {
-                            dailyTaskModel.saveDailyTask()
-                        }
-                    }
-                }
-                .id(UUID())
-                .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding()
         }
+        .blur(radius: dailyTaskModel.showPopup ? 2 : 0)
         .overlay(alignment: .bottomTrailing) {
             OptionView()
                 .environmentObject(taskModel)
+            DailyTaskPopupView()
+                .environmentObject(dailyTaskModel)
         }
         .fullScreenCover(isPresented: $taskModel.openEditTask) {
             taskModel.resetTaskData()
@@ -106,6 +93,7 @@ struct Home: View {
             AddNewDailyTaskView()
                 .environmentObject(dailyTaskModel)
         }
+        
     }
     
     //MARK: Custom Segmented Bar

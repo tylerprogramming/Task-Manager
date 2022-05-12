@@ -9,6 +9,8 @@ import SwiftUI
 import CoreData
 
 class DailyTaskViewModel: ObservableObject {
+    @Published var showPopup: Bool = false
+    @Published var popupOffset = CGSize.zero
     @Published var openEditTask: Bool = false
     @Published var editTask: DailyTask?
     @Published var percentageOfTasks: Double = 0
