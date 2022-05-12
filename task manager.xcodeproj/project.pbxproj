@@ -21,6 +21,14 @@
 		2F75706A282580B800E2DD69 /* AddNewTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F757069282580B800E2DD69 /* AddNewTask.swift */; };
 		2F7570702825C81300E2DD69 /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F75706F2825C81300E2DD69 /* TaskRowView.swift */; };
 		2F757074282715F900E2DD69 /* DynamicFilteredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F757073282715F900E2DD69 /* DynamicFilteredView.swift */; };
+		2F7570762829819900E2DD69 /* OptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570752829819800E2DD69 /* OptionView.swift */; };
+		2F7570782829A94B00E2DD69 /* AddNewDailyTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570772829A94B00E2DD69 /* AddNewDailyTaskView.swift */; };
+		2F75707A2829AC0900E2DD69 /* DailyTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570792829AC0900E2DD69 /* DailyTaskViewModel.swift */; };
+		2F75707C2829E41200E2DD69 /* DailyTasks+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F75707B2829E41200E2DD69 /* DailyTasks+Extension.swift */; };
+		2F7570B9282B376A00E2DD69 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570B8282B376A00E2DD69 /* RingView.swift */; };
+		2F7570BB282B377300E2DD69 /* RingShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570BA282B377300E2DD69 /* RingShape.swift */; };
+		2F7570BE282D4A4600E2DD69 /* DayInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570BD282D4A4600E2DD69 /* DayInformation.swift */; };
+		2F7570C0282D9C9300E2DD69 /* DailyTaskPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570BF282D9C9200E2DD69 /* DailyTaskPopupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +66,14 @@
 		2F757069282580B800E2DD69 /* AddNewTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTask.swift; sourceTree = "<group>"; };
 		2F75706F2825C81300E2DD69 /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		2F757073282715F900E2DD69 /* DynamicFilteredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicFilteredView.swift; sourceTree = "<group>"; };
+		2F7570752829819800E2DD69 /* OptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionView.swift; sourceTree = "<group>"; };
+		2F7570772829A94B00E2DD69 /* AddNewDailyTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewDailyTaskView.swift; sourceTree = "<group>"; };
+		2F7570792829AC0900E2DD69 /* DailyTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTaskViewModel.swift; sourceTree = "<group>"; };
+		2F75707B2829E41200E2DD69 /* DailyTasks+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyTasks+Extension.swift"; sourceTree = "<group>"; };
+		2F7570B8282B376A00E2DD69 /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
+		2F7570BA282B377300E2DD69 /* RingShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingShape.swift; sourceTree = "<group>"; };
+		2F7570BD282D4A4600E2DD69 /* DayInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInformation.swift; sourceTree = "<group>"; };
+		2F7570BF282D9C9200E2DD69 /* DailyTaskPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTaskPopupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +124,7 @@
 		2F7570332825772900E2DD69 /* task manager */ = {
 			isa = PBXGroup;
 			children = (
+				2F7570BC282D4A2E00E2DD69 /* Components */,
 				2F75706628257D8000E2DD69 /* ViewModel */,
 				2F75706328257C0800E2DD69 /* Views */,
 				2F7570342825772900E2DD69 /* task_managerApp.swift */,
@@ -116,6 +133,7 @@
 				2F7570382825772B00E2DD69 /* Assets.xcassets */,
 				2F75703F2825772B00E2DD69 /* task_manager.xcdatamodeld */,
 				2F75703A2825772B00E2DD69 /* Preview Content */,
+				2F75707B2829E41200E2DD69 /* DailyTasks+Extension.swift */,
 			);
 			path = "task manager";
 			sourceTree = "<group>";
@@ -152,6 +170,11 @@
 				2F757069282580B800E2DD69 /* AddNewTask.swift */,
 				2F75706F2825C81300E2DD69 /* TaskRowView.swift */,
 				2F757073282715F900E2DD69 /* DynamicFilteredView.swift */,
+				2F7570752829819800E2DD69 /* OptionView.swift */,
+				2F7570772829A94B00E2DD69 /* AddNewDailyTaskView.swift */,
+				2F7570B8282B376A00E2DD69 /* RingView.swift */,
+				2F7570BA282B377300E2DD69 /* RingShape.swift */,
+				2F7570BF282D9C9200E2DD69 /* DailyTaskPopupView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -160,8 +183,17 @@
 			isa = PBXGroup;
 			children = (
 				2F75706728257D8B00E2DD69 /* TaskViewModel.swift */,
+				2F7570792829AC0900E2DD69 /* DailyTaskViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2F7570BC282D4A2E00E2DD69 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2F7570BD282D4A4600E2DD69 /* DayInformation.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,14 +327,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F75703E2825772B00E2DD69 /* Persistence.swift in Sources */,
+				2F7570BB282B377300E2DD69 /* RingShape.swift in Sources */,
 				2F7570702825C81300E2DD69 /* TaskRowView.swift in Sources */,
+				2F7570BE282D4A4600E2DD69 /* DayInformation.swift in Sources */,
 				2F75706828257D8C00E2DD69 /* TaskViewModel.swift in Sources */,
+				2F7570762829819900E2DD69 /* OptionView.swift in Sources */,
+				2F7570B9282B376A00E2DD69 /* RingView.swift in Sources */,
+				2F7570782829A94B00E2DD69 /* AddNewDailyTaskView.swift in Sources */,
 				2F7570372825772900E2DD69 /* ContentView.swift in Sources */,
 				2F75706528257C1200E2DD69 /* Home.swift in Sources */,
 				2F757074282715F900E2DD69 /* DynamicFilteredView.swift in Sources */,
+				2F7570C0282D9C9300E2DD69 /* DailyTaskPopupView.swift in Sources */,
 				2F75706A282580B800E2DD69 /* AddNewTask.swift in Sources */,
+				2F75707A2829AC0900E2DD69 /* DailyTaskViewModel.swift in Sources */,
 				2F7570412825772B00E2DD69 /* task_manager.xcdatamodeld in Sources */,
 				2F7570352825772900E2DD69 /* task_managerApp.swift in Sources */,
+				2F75707C2829E41200E2DD69 /* DailyTasks+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
