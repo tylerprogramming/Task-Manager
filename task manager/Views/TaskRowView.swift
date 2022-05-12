@@ -32,12 +32,16 @@ struct TaskRowView: View {
                     
                     if !task.isCompleted {
                         Button {
-                            taskModel.editTask = task
-                            taskModel.openEditTask = true
-                            taskModel.setupTask()
+                            task.isCompleted.toggle()
+                            
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                taskModel.saveTask()
+                            }
                         } label: {
-                            Image(systemName: "square.and.pencil")
-                                .foregroundColor(.black)
+                            Circle()
+                                .strokeBorder(.black, lineWidth: 1.5)
+                                .frame(width: 25, height: 25)
+                                .contentShape(Circle())
                         }
                     } else {
                         Image(systemName: "checkmark.circle.fill")
@@ -65,18 +69,6 @@ struct TaskRowView: View {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    if !task.isCompleted {
-                        Button {
-                            task.isCompleted.toggle()
-                            try? environment.managedObjectContext.save()
-                        } label: {
-                            Circle()
-                                .strokeBorder(.black, lineWidth: 1.5)
-                                .frame(width: 25, height: 25)
-                                .contentShape(Circle())
-                        }
-                    }
                 }
             }
         }
@@ -99,15 +91,15 @@ struct TaskRowView: View {
                 Spacer()
                 
                 if !task.isCompleted {
-                    HStack {
-                        Button {
-                            taskModel.editTask = task
-                            taskModel.openEditTask = true
-                            taskModel.setupTask()
-                        } label: {
-                            Image(systemName: "square.and.pencil")
-                                .foregroundColor(.black)
+                    Button {
+                        task.isCompleted.toggle()
+                        
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            taskModel.saveTask()
                         }
+                    } label: {
+                        Image(systemName: "circle")
+                            .foregroundColor(.black)
                     }
                 } else {
                     Image(systemName: "checkmark.circle.fill")
@@ -124,16 +116,6 @@ struct TaskRowView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                
-                if !task.isCompleted {
-                    Button {
-                        task.isCompleted.toggle()
-                        try? environment.managedObjectContext.save()
-                    } label: {
-                        Image(systemName: "circle")
-                            .foregroundColor(.black)
-                    }
-                }
             }
         }
     }

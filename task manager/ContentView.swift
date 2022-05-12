@@ -10,30 +10,17 @@ import CoreData
 
 struct ContentView: View {
     @EnvironmentObject var taskModel: TaskViewModel
+    @EnvironmentObject var dailyTaskModel: DailyTaskViewModel
     
     var body: some View {
-        NavigationView {
         Home()
-            .navigationTitle("Task Manager")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem {
-                    Button {
-                        withAnimation(.easeInOut) {
-                            taskModel.showSmallTaskRows.toggle()
-                        }
-                    } label: {
-                        Text("Small Rows")
-                    }
-                }
-            }
             .environmentObject(taskModel)
-        }
+            .environmentObject(dailyTaskModel)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView()
     }
 }

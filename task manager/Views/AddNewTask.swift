@@ -9,8 +9,8 @@ import SwiftUI
 
 struct AddNewTask: View {
     @EnvironmentObject var taskModel: TaskViewModel
-    //MARK: All Environment Values in one variable
     @Environment(\.self) var environment
+    
     @Namespace var animation
     
     var body: some View {
@@ -27,11 +27,12 @@ struct AddNewTask: View {
                             .foregroundColor(.black)
                     }
                 }
-                .overlay(alignment: .leading) {
+                .overlay(alignment: .trailing) {
                     Button {
-                        if let editTask = taskModel.editTask {
-                            try? environment.managedObjectContext.delete(editTask)
-                            try? environment.managedObjectContext.save()
+                        let task = taskModel.editTask
+                        
+                        if task != nil {
+                            taskModel.deleteTask(task: taskModel.editTask!)
                             environment.dismiss()
                         }
                     } label: {
@@ -47,11 +48,8 @@ struct AddNewTask: View {
                     .font(.caption)
                     .foregroundColor(.gray)
                 
-                //MARK: Sample Card Colors
-                let colors: [String] = ["Yellow", "Green", "Blue", "Purple", "Red", "Orange"]
-                
                 HStack(spacing: 15) {
-                    ForEach(colors, id: \.self) { color in
+                    ForEach(taskModel.colors, id: \.self) { color in
                         Circle()
                             .fill(Color(color))
                             .frame(width: 25, height: 25)
@@ -109,17 +107,14 @@ struct AddNewTask: View {
             }
             
             Divider()
-            
-            //MARL: Sample Task Types
-            let taskTypes: [String] = ["Basic", "Urgent", "Important"]
-            
+
             VStack(alignment: .leading, spacing: 12) {
-                Text("Task Title")
+                Text("Task Types")
                     .font(.caption)
                     .foregroundColor(.gray)
                 
                 HStack(spacing: 12) {
-                    ForEach(taskTypes, id: \.self) { type in
+                    ForEach(taskModel.taskTypes, id: \.self) { type in
                         Text(type)
                             .font(.callout)
                             .padding(.vertical, 8)
@@ -153,9 +148,11 @@ struct AddNewTask: View {
             //MARK: Save Button
             Button {
                 //MARK: If Successful, then dismiss view
-                if taskModel.addTask(context: environment.managedObjectContext) {
-                    environment.dismiss()
-                }
+                taskModel.addTask()
+                environment.dismiss()
+//                if taskModel.addTask(context: environment.managedObjectContext) {
+//                    environment.dismiss()
+//                }
             } label: {
                 Text("Save Task")
                     .font(.callout)

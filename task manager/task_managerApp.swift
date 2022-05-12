@@ -9,14 +9,14 @@ import SwiftUI
 
 @main
 struct task_managerApp: App {
-    let persistenceController = PersistenceController.shared
     @StateObject var taskModel: TaskViewModel = .init()
+    @StateObject var dailyTaskModel: DailyTaskViewModel = .init()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(taskModel)
+                .environmentObject(dailyTaskModel)
         }
     }
 }
