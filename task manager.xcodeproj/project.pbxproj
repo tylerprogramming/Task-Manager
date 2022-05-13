@@ -29,6 +29,7 @@
 		2F7570BB282B377300E2DD69 /* RingShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570BA282B377300E2DD69 /* RingShape.swift */; };
 		2F7570BE282D4A4600E2DD69 /* DayInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570BD282D4A4600E2DD69 /* DayInformation.swift */; };
 		2F7570C0282D9C9300E2DD69 /* DailyTaskPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570BF282D9C9200E2DD69 /* DailyTaskPopupView.swift */; };
+		2F7570C2282E7D1A00E2DD69 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7570C1282E7D1900E2DD69 /* NotificationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		2F7570BA282B377300E2DD69 /* RingShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingShape.swift; sourceTree = "<group>"; };
 		2F7570BD282D4A4600E2DD69 /* DayInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayInformation.swift; sourceTree = "<group>"; };
 		2F7570BF282D9C9200E2DD69 /* DailyTaskPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTaskPopupView.swift; sourceTree = "<group>"; };
+		2F7570C1282E7D1900E2DD69 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 			children = (
 				2F75706728257D8B00E2DD69 /* TaskViewModel.swift */,
 				2F7570792829AC0900E2DD69 /* DailyTaskViewModel.swift */,
+				2F7570C1282E7D1900E2DD69 /* NotificationManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				2F75706528257C1200E2DD69 /* Home.swift in Sources */,
 				2F757074282715F900E2DD69 /* DynamicFilteredView.swift in Sources */,
 				2F7570C0282D9C9300E2DD69 /* DailyTaskPopupView.swift in Sources */,
+				2F7570C2282E7D1A00E2DD69 /* NotificationManager.swift in Sources */,
 				2F75706A282580B800E2DD69 /* AddNewTask.swift in Sources */,
 				2F75707A2829AC0900E2DD69 /* DailyTaskViewModel.swift in Sources */,
 				2F7570412825772B00E2DD69 /* task_manager.xcdatamodeld in Sources */,

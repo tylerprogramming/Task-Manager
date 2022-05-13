@@ -10,6 +10,7 @@ import SwiftUI
 struct Home: View {
     @EnvironmentObject var taskModel: TaskViewModel
     @EnvironmentObject var dailyTaskModel: DailyTaskViewModel
+    @EnvironmentObject var notificationManager: NotificationManager
 
     @State var percentageOfTasksComplete: Double = 0
     @State var percentageOfTasksComplete2: Double = 25
@@ -80,6 +81,7 @@ struct Home: View {
                 .environmentObject(taskModel)
             DailyTaskPopupView()
                 .environmentObject(dailyTaskModel)
+                .environmentObject(notificationManager)
         }
         .fullScreenCover(isPresented: $taskModel.openEditTask) {
             taskModel.resetTaskData()
@@ -92,6 +94,9 @@ struct Home: View {
         } content: {
             AddNewDailyTaskView()
                 .environmentObject(dailyTaskModel)
+        }
+        .onAppear {
+            notificationManager.dailyTaskModel = dailyTaskModel
         }
         
     }

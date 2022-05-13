@@ -10,6 +10,9 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="totalDailyTasksComplete" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Notifications" representedClassName="Notifications" syncable="YES" codeGenerationType="class">
+        <attribute name="calendarEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Task" representedClassName="Task" syncable="YES" codeGenerationType="class">
         <attribute name="color" optional="YES" attributeType="String"/>
         <attribute name="deadline" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -19,7 +22,8 @@
     </entity>
     <elements>
         <element name="DailyTask" positionX="-63" positionY="18" width="128" height="74"/>
-        <element name="Task" positionX="-63" positionY="-18" width="128" height="104"/>
         <element name="Day" positionX="-54" positionY="36" width="128" height="74"/>
+        <element name="Task" positionX="-63" positionY="-18" width="128" height="104"/>
+        <element name="Notifications" positionX="-36" positionY="54" width="128" height="44"/>
     </elements>
 </model>

@@ -10,6 +10,8 @@ import Foundation
 
 struct DailyTaskPopupView: View {
     @EnvironmentObject var dailyTaskModel: DailyTaskViewModel
+    @EnvironmentObject var notificationManager: NotificationManager
+    
     @GestureState var popupOffset = CGSize.zero
     
     var body: some View {
@@ -23,12 +25,32 @@ struct DailyTaskPopupView: View {
                     }
                 
                 VStack {
-                    Text("Daily Tasks")
-                        .fontWeight(.bold)
-                        .font(.title)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(.yellow)
+                    HStack(alignment: .center) {
+                        Text("Daily Tasks")
+                            .fontWeight(.bold)
+                            .font(.title)
+                            .padding()
+                        
+                        Button {
+                            notificationManager.calendarNotificationEnabled.toggle()
+                            
+                            if notificationManager.calendarNotificationEnabled {
+                                notificationManager.requestAuthorization()
+                                notificationManager.scheduleNotifications()
+                                notificationManager.saveNotifications()
+                            } else {
+                                notificationManager.cancelNotifications()
+                                notificationManager.saveNotifications()
+                            }
+                        } label: {
+                            Image(systemName: notificationManager.calendarNotificationEnabled ? "bell.fill" : "bell")
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                                .shadow(radius: 4)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .background(.yellow)
                         
                     ForEach(dailyTaskModel.savedEntities) { dailyTask in
                         Label(
@@ -53,14 +75,17 @@ struct DailyTaskPopupView: View {
                     Button {
                         dailyTaskModel.showPopup.toggle()
                     } label: {
-                        Text("Tap this button to close.")
+                        Image(systemName: "xmark.circle")
+                            .font(.largeTitle)
+                            .foregroundColor(.red)
                     }
                     .padding(.bottom)
                 }
-                .frame(height: 300)
+                .frame(height: 350)
                 .background(.white)
                 .cornerRadius(20)
                 .shadow(radius: 20)
+                .padding(.top, 50)
                 .padding(.horizontal, 25)
                 .offset(dailyTaskModel.popupOffset)
                 .gesture(
@@ -73,7 +98,12 @@ struct DailyTaskPopupView: View {
                             dailyTaskModel.showPopup.toggle()
                             dailyTaskModel.popupOffset = CGSize.zero
                         }))
+                
             }
+            
+        }
+        .onAppear {
+            print(notificationManager.calendarNotificationEnabled)
         }
         .animation(.default, value: dailyTaskModel.showPopup)
     }

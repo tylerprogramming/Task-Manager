@@ -16,8 +16,8 @@ class DailyTaskViewModel: ObservableObject {
     @Published var percentageOfTasks: Double = 0
     @Published var savedEntities: [DailyTask] = []
     @Published var daysEntities: [Day] = []
-    @Published var currentDay: Int = 1
-    var currentMonth: Int = 12
+//    @Published var currentDay: Int = 1
+//    var currentMonth: Int = 12
     
     let container: NSPersistentContainer
     
@@ -28,6 +28,7 @@ class DailyTaskViewModel: ObservableObject {
                 print("Error loading Core Data. \(error)")
             }
         }
+        container.viewContext.mergePolicy = NSMergePolicy(merge: NSMergePolicyType.mergeByPropertyObjectTrumpMergePolicyType)
 
         fetchDailyTasks()
         fetchDays()
@@ -85,7 +86,6 @@ class DailyTaskViewModel: ObservableObject {
         
         do {
             daysEntities = try container.viewContext.fetch(request)
-            print(daysEntities)
         } catch let error {
             print("Error fetching. \(error)")
         }
@@ -135,21 +135,29 @@ class DailyTaskViewModel: ObservableObject {
     }
     
     func updatePercentageOfDailyTasksCompleted() {
-        var count = 0
-        
-        for i in 0..<savedEntities.count {
-            if savedEntities[i].isCompleted {
-                count += 1
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+
+        // if it's not the same day, don't update the task percentage
+        // when it moves to the next day it will reset the tasks then come here and update yesterdays to zero
+        // this check makes sure it won't do that on the next day
+        if daysEntities[daysEntities.count - 1].currentDate == today {
+            var count = 0
+            
+            for i in 0..<savedEntities.count {
+                if savedEntities[i].isCompleted {
+                    count += 1
+                }
             }
-        }
-        
-        percentageOfTasks = Double(count) / Double(savedEntities.count) * 100
-        daysEntities[daysEntities.count - 1].totalDailyTasksComplete = percentageOfTasks
-        
-        do {
-            try container.viewContext.save()
-        } catch {
-            print("Couldn't save percentage of tasks for the current day.")
+            
+            percentageOfTasks = Double(count) / Double(savedEntities.count) * 100
+            daysEntities[daysEntities.count - 1].totalDailyTasksComplete = percentageOfTasks
+            
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("Couldn't save percentage of tasks for the current day. \(error)")
+            }
         }
     }
     
@@ -161,7 +169,6 @@ class DailyTaskViewModel: ObservableObject {
         let currentDay = calendar.component(.day, from: today)
         
         if dayOfTheMonth == currentDay {
-            print("true")
             return true
         }
         

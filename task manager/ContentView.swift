@@ -11,11 +11,13 @@ import CoreData
 struct ContentView: View {
     @EnvironmentObject var taskModel: TaskViewModel
     @EnvironmentObject var dailyTaskModel: DailyTaskViewModel
+    @EnvironmentObject var notificationManager: NotificationManager
     
     var body: some View {
         Home()
             .environmentObject(taskModel)
             .environmentObject(dailyTaskModel)
+            .environmentObject(notificationManager)
     }
 }
 

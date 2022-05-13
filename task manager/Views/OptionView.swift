@@ -33,7 +33,7 @@ struct OptionView: View {
                     showButtons.toggle()
                     dailyTaskModel.openEditTask.toggle()
                 } label: {
-                    Image(systemName: "gauge.badge.plus")
+                    Image(systemName: "d.circle.fill")
                         .padding(24)
                         .rotationEffect(Angle.degrees(showButtons ? 0 : 90))
                 }
@@ -45,7 +45,7 @@ struct OptionView: View {
                     showButtons.toggle()
                     dailyTaskModel.showPopup.toggle()
                 } label: {
-                    Image(systemName: "calendar.badge.plus")
+                    Image(systemName: "list.bullet.rectangle.portrait")
                         .padding(24)
                         .rotationEffect(Angle.degrees(showButtons ? 0 : 90))
                 }
