@@ -87,17 +87,14 @@ class TaskViewModel: ObservableObject {
     }
     
     func updateTask(task: Task) {
-        var task: Task!
-        
-        if let editTask = editTask {
-            task = editTask
-        }
-        
-        task.title = taskTitle
-        task.color = taskColor
-        task.deadline = taskDeadline
-        task.type = taskType
-        task.isCompleted = taskIsCompleted
+        var task = task
+
+        print(task)
+//        task.title = editTask!.title
+//        task.color = editTask?.color
+//        task.deadline = editTask?.deadline
+//        task.type = editTask!.type
+//        task.isCompleted = editTask!.isCompleted
         
         saveTask()
         updatePercentageOfTodayTasksCompleted()

@@ -86,11 +86,7 @@ struct Home: View {
             print("daily task")
         } content: {
             AddNewDailyTaskView(dailyTaskModel: dailyTaskModel, notificationManager: notificationManager)
-        }
-//        .onAppear {
-//            notificationManager.dailyTaskModel = dailyTaskModel
-//        }
-        
+        }        
     }
     
     //MARK: Custom Segmented Bar
