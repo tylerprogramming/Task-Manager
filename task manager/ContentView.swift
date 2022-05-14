@@ -9,20 +9,21 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @EnvironmentObject var taskModel: TaskViewModel
-    @EnvironmentObject var dailyTaskModel: DailyTaskViewModel
-    @EnvironmentObject var notificationManager: NotificationManager
+    @ObservedObject var taskModel: TaskViewModel
+    @ObservedObject var dailyTaskModel: DailyTaskViewModel
+    @ObservedObject var notificationManager: NotificationManager
     
     var body: some View {
-        Home()
-            .environmentObject(taskModel)
-            .environmentObject(dailyTaskModel)
-            .environmentObject(notificationManager)
+        Home(
+            taskModel: taskModel,
+            dailyTaskModel: dailyTaskModel,
+            notificationManager: notificationManager
+        )
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(taskModel: TaskViewModel(), dailyTaskModel: DailyTaskViewModel(), notificationManager: NotificationManager())
     }
 }

@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct OptionView: View {
-    @EnvironmentObject var taskModel: TaskViewModel
-    @EnvironmentObject var dailyTaskModel: DailyTaskViewModel
+    @ObservedObject var taskModel: TaskViewModel
+    @ObservedObject var dailyTaskModel: DailyTaskViewModel
     
     @State private var showButtons = false
     

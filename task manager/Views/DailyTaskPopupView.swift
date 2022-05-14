@@ -9,8 +9,8 @@ import SwiftUI
 import Foundation
 
 struct DailyTaskPopupView: View {
-    @EnvironmentObject var dailyTaskModel: DailyTaskViewModel
-    @EnvironmentObject var notificationManager: NotificationManager
+    @ObservedObject var dailyTaskModel: DailyTaskViewModel
+    @ObservedObject var notificationManager: NotificationManager
     
     @GestureState var popupOffset = CGSize.zero
     
@@ -31,23 +31,7 @@ struct DailyTaskPopupView: View {
                             .font(.title)
                             .padding()
                         
-                        Button {
-                            notificationManager.calendarNotificationEnabled.toggle()
-                            
-                            if notificationManager.calendarNotificationEnabled {
-                                notificationManager.requestAuthorization()
-                                notificationManager.scheduleNotifications()
-                                notificationManager.saveNotifications()
-                            } else {
-                                notificationManager.cancelNotifications()
-                                notificationManager.saveNotifications()
-                            }
-                        } label: {
-                            Image(systemName: notificationManager.calendarNotificationEnabled ? "bell.fill" : "bell")
-                                .font(.largeTitle)
-                                .foregroundColor(.white)
-                                .shadow(radius: 4)
-                        }
+                        NotificationView(notificationManager: notificationManager, dailyTaskModel: dailyTaskModel)
                     }
                     .frame(maxWidth: .infinity)
                     .background(.yellow)
@@ -62,6 +46,9 @@ struct DailyTaskPopupView: View {
 
                             withAnimation(.easeInOut(duration: 0.75)) {
                                 dailyTaskModel.saveDailyTask()
+                                notificationManager.total = Double(dailyTaskModel.savedEntities.count)
+                                notificationManager.totalComplete = dailyTaskModel.getTotalComplete()
+                                notificationManager.saveNotifications()
                             }
                         }
                         .font(.title2)
@@ -98,7 +85,6 @@ struct DailyTaskPopupView: View {
                             dailyTaskModel.showPopup.toggle()
                             dailyTaskModel.popupOffset = CGSize.zero
                         }))
-                
             }
             
         }

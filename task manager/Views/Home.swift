@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct Home: View {
-    @EnvironmentObject var taskModel: TaskViewModel
-    @EnvironmentObject var dailyTaskModel: DailyTaskViewModel
-    @EnvironmentObject var notificationManager: NotificationManager
+    @ObservedObject var taskModel: TaskViewModel
+    @ObservedObject var dailyTaskModel: DailyTaskViewModel
+    @ObservedObject var notificationManager: NotificationManager
 
     @State var percentageOfTasksComplete: Double = 0
     @State var percentageOfTasksComplete2: Double = 25
@@ -57,9 +57,7 @@ struct Home: View {
                             Text("\(day.dayOfTheWeek)")
                                 .fontWeight(.bold)
                                 .font(.title2)
-                            Ring(dayInformation: day)
-                                .environmentObject(taskModel)
-                                .environmentObject(dailyTaskModel)
+                            Ring(taskModel: taskModel, dailyTaskModel: dailyTaskModel, dayInformation: day)
                                 .scaledToFit()
                         }
                     }
@@ -69,35 +67,29 @@ struct Home: View {
                 CustomSegmentedBar()
                     .padding(.top, 5)
                 
-                DynamicFilteredView(currentTab: taskModel.currentTab, tasksArray: taskModel.savedTasks)
-                    .environmentObject(taskModel)
-                    .id(UUID())
+                DynamicFilteredView(taskModel: taskModel, currentTab: taskModel.currentTab, tasksArray: taskModel.savedTasks)
+//                    .id(UUID())
             }
             .padding()
         }
         .blur(radius: dailyTaskModel.showPopup ? 2 : 0)
         .overlay(alignment: .bottomTrailing) {
-            OptionView()
-                .environmentObject(taskModel)
-            DailyTaskPopupView()
-                .environmentObject(dailyTaskModel)
-                .environmentObject(notificationManager)
+            OptionView(taskModel: taskModel, dailyTaskModel: dailyTaskModel)
+            DailyTaskPopupView(dailyTaskModel: dailyTaskModel, notificationManager: notificationManager)
         }
         .fullScreenCover(isPresented: $taskModel.openEditTask) {
             taskModel.resetTaskData()
         } content: {
-            AddNewTask()
-                .environmentObject(taskModel)
+            AddNewTask(taskModel: taskModel)
         }
         .fullScreenCover(isPresented: $dailyTaskModel.openEditTask) {
             print("daily task")
         } content: {
-            AddNewDailyTaskView()
-                .environmentObject(dailyTaskModel)
+            AddNewDailyTaskView(dailyTaskModel: dailyTaskModel, notificationManager: notificationManager)
         }
-        .onAppear {
-            notificationManager.dailyTaskModel = dailyTaskModel
-        }
+//        .onAppear {
+//            notificationManager.dailyTaskModel = dailyTaskModel
+//        }
         
     }
     
@@ -133,8 +125,8 @@ struct Home: View {
 }
 
 struct Ring: View {
-    @EnvironmentObject var taskModel: TaskViewModel
-    @EnvironmentObject var dailyTaskModel: DailyTaskViewModel
+    @ObservedObject var taskModel: TaskViewModel
+    @ObservedObject var dailyTaskModel: DailyTaskViewModel
     
     var dayInformation: DayInformation
     
@@ -161,7 +153,6 @@ struct Ring: View {
                         backgroundColor: .red.opacity(0.2),
                         foregroundColor: .red,
                         percentage: dailyTaskModel.checkDayPercentageOfTasks(dayInformation: dayInformation) ? dailyTaskModel.percentageOfTasks : dailyTaskModel.getOtherDaysPercentageOfTasks(dayInformation: dayInformation)
-//                        percentage: dailyTaskModel.percentageOfTasks
                     )
                     .frame(width: geometry.size.width)
                 }
@@ -171,6 +162,6 @@ struct Ring: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home()
+        Home(taskModel: TaskViewModel(), dailyTaskModel: DailyTaskViewModel(), notificationManager: NotificationManager())
     }
 }

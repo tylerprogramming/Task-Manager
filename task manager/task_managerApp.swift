@@ -10,21 +10,17 @@ import UserNotifications
 
 @main
 struct task_managerApp: App {
-    @StateObject var taskModel: TaskViewModel = .init()
-    @StateObject var dailyTaskModel: DailyTaskViewModel = .init()
-    @StateObject var notificationManager: NotificationManager = .init()
+    @StateObject var taskModel = TaskViewModel()
+    @StateObject var dailyTaskModel = DailyTaskViewModel()
+    @StateObject var notificationManager = NotificationManager()
 
     var body: some Scene {
-//        notificationManager = NotificationManager(dailyTaskModel: dailyTaskModel)
-//        notificationManager = NotificationManager(dailyTaskModel: dailyTaskModel)
-        
+
         WindowGroup {
-            ContentView()
-                .environmentObject(taskModel)
-                .environmentObject(dailyTaskModel)
-                .environmentObject(notificationManager)
+            ContentView(taskModel: taskModel, dailyTaskModel: dailyTaskModel, notificationManager: notificationManager)
                 .onAppear {
                     UIApplication.shared.applicationIconBadgeNumber = 0
+                    notificationManager.requestAuthorization()
                 }
         }
     }

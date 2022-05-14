@@ -9,15 +9,17 @@ import SwiftUI
 import CoreData
 
 struct DynamicFilteredView: View {
-    @EnvironmentObject var taskModel: TaskViewModel
+    @ObservedObject var taskModel: TaskViewModel
     
     @State var currentTab: String
     @State var tasksArray: [Task]
+    
     var filteredArray: [Task] = []
     
-    init(currentTab: String, tasksArray: [Task]) {
+    init(taskModel: TaskViewModel, currentTab: String, tasksArray: [Task]) {
         self.currentTab = currentTab
         self.tasksArray = tasksArray
+        self.taskModel = taskModel
         
         let calendar = Calendar.current
         
@@ -59,11 +61,10 @@ struct DynamicFilteredView: View {
                     .font(.title2)
             } else {
                 ForEach(filteredArray, id: \.self) { task in
-                    TaskRowView(task: task)
+                    TaskRowView(task: task, taskModel: taskModel)
                         .onTapGesture {
                             if !task.isCompleted {
                                 taskModel.editTask = task
-//                                taskModel.taskIsCompleted.toggle()
                                 taskModel.openEditTask = true
                                 taskModel.updateTask(task: task)
                                 taskModel.setupTask()

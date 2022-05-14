@@ -9,7 +9,8 @@ import SwiftUI
 import CoreData
 
 struct AddNewDailyTaskView: View {
-    @EnvironmentObject var dailyTaskModel: DailyTaskViewModel
+    @ObservedObject var dailyTaskModel: DailyTaskViewModel
+    @ObservedObject var notificationManager: NotificationManager
     @Environment(\.self) var environment
     
     @State private var inputDailyTask: String = ""
@@ -40,6 +41,9 @@ struct AddNewDailyTaskView: View {
             Button {
                 dailyTaskModel.addTask(title: inputDailyTask)
                 inputDailyTask = ""
+                notificationManager.total = Double(dailyTaskModel.savedEntities.count)
+                notificationManager.totalComplete = dailyTaskModel.getTotalComplete()
+                notificationManager.saveNotifications()
             } label: {
                 Image(systemName: "plus")
                     .font(.title)
@@ -59,6 +63,9 @@ struct AddNewDailyTaskView: View {
                     
                         Button {
                             dailyTaskModel.deleteDailyTask(entity: dailyTask)
+                            notificationManager.total = Double(dailyTaskModel.savedEntities.count)
+                            notificationManager.totalComplete = dailyTaskModel.getTotalComplete()
+                            notificationManager.saveNotifications()
                         } label: {
                             Image(systemName: "trash")
                                 .font(.title3)
@@ -74,9 +81,3 @@ struct AddNewDailyTaskView: View {
         .frame(maxHeight: .infinity, alignment: .top)
     }
 }
-
-//struct AddNewDailyTaskView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddNewDailyTaskView(dailyTasks: FetchedResults<DailyTask>)
-//    }
-//}

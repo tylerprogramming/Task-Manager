@@ -10,7 +10,7 @@ import SwiftUI
 struct TaskRowView: View {
     @ObservedObject var task: Task
     
-    @EnvironmentObject var taskModel: TaskViewModel
+    @ObservedObject var taskModel: TaskViewModel
     @Environment(\.self) var environment
     
     var body: some View {

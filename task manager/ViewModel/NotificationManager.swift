@@ -10,10 +10,11 @@ import UserNotifications
 import CoreData
 
 class NotificationManager: ObservableObject {
-//    @ObservedObject var dailyTaskModel: DailyTaskViewModel
     @Published var calendarNotificationEnabled = false
     @Published var savedNotifications: [Notifications] = []
-    @ObservedObject var dailyTaskModel = DailyTaskViewModel()
+    
+    @Published var total: Double = 0.0
+    @Published var totalComplete: Double = 0.0
     
     let container: NSPersistentContainer
     
@@ -25,20 +26,26 @@ class NotificationManager: ObservableObject {
             }
         }
         
-//        self.dailyTaskModel = dailyTaskModel
-
         fetchNotifications()
         
         if savedNotifications.isEmpty {
-            print("empty")
             var notification: Notifications
 
             notification = Notifications(context: container.viewContext)
             notification.calendarEnabled = false
-            saveNotifications()
+            notification.totalDailyTasksComplete = 0.0
+            notification.totalDailyTasks = 0.0
+            
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("\(error)")
+            }
+            
         } else {
             savedNotifications[0].calendarEnabled = calendarNotificationEnabled
-            print(calendarNotificationEnabled)
+            savedNotifications[0].totalDailyTasks = total
+            
             saveNotifications()
         }
     }
@@ -48,7 +55,6 @@ class NotificationManager: ObservableObject {
         
         do {
             savedNotifications = try container.viewContext.fetch(request)
-            calendarNotificationEnabled = savedNotifications[0].calendarEnabled
         } catch let error {
             print("Error fetching. \(error)")
         }
@@ -56,9 +62,14 @@ class NotificationManager: ObservableObject {
     
     func saveNotifications() {
         do {
+            // the first coredata element in Notifications is the calendar notification
+            // may need to change later, used it this way to test since it's new to me
             savedNotifications[0].calendarEnabled = calendarNotificationEnabled
+            savedNotifications[0].totalDailyTasks = total
             try container.viewContext.save()
+            
             fetchNotifications()
+            scheduleNotifications()
         } catch let error {
             print("Error saving. \(error)")
         }
@@ -78,28 +89,14 @@ class NotificationManager: ObservableObject {
     }
     
     func scheduleNotifications() {
-        var totalCount = 0
-        var percentage = 0.0
-        var totalComplete = 0
-        
-        for index in 0..<dailyTaskModel.savedEntities.count {
-            if dailyTaskModel.savedEntities[index].isCompleted {
-                totalComplete += 1
-            }
-            
-            totalCount += 1
-        }
-
-        percentage = (Double(totalComplete) / Double(totalCount)) * 100
-        
         let content = UNMutableNotificationContent()
-        content.title = "Daily Tasks Complete: \(totalComplete) [\(percentage)%]"
+        content.title = "Daily Tasks Complete: \(totalComplete) - \((totalComplete / total) * 100)"
         content.subtitle = getMessageNotificationBasedOnComplete()
         content.sound = .default
         content.badge = 1
 
         var dateComponents = DateComponents()
-        dateComponents.hour = 20
+        dateComponents.hour = 22
         dateComponents.minute = 30
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
@@ -110,6 +107,7 @@ class NotificationManager: ObservableObject {
             content: content,
             trigger: trigger)
         
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         UNUserNotificationCenter.current().add(request)
     }
     

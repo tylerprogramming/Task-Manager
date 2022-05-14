@@ -16,8 +16,6 @@ class DailyTaskViewModel: ObservableObject {
     @Published var percentageOfTasks: Double = 0
     @Published var savedEntities: [DailyTask] = []
     @Published var daysEntities: [Day] = []
-//    @Published var currentDay: Int = 1
-//    var currentMonth: Int = 12
     
     let container: NSPersistentContainer
     
@@ -29,7 +27,7 @@ class DailyTaskViewModel: ObservableObject {
             }
         }
         container.viewContext.mergePolicy = NSMergePolicy(merge: NSMergePolicyType.mergeByPropertyObjectTrumpMergePolicyType)
-
+        
         fetchDailyTasks()
         fetchDays()
         
@@ -185,5 +183,17 @@ class DailyTaskViewModel: ObservableObject {
         }
         
         return percentageOfDailyTasksComplete
+    }
+    
+    func getTotalComplete() -> Double {
+        var totalComplete = 0.0
+        
+        for index in 0..<savedEntities.count {
+            if savedEntities[index].isCompleted {
+                totalComplete += 1.0
+            }
+        }
+        
+        return totalComplete
     }
 }
